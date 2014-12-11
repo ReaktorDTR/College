@@ -4,7 +4,16 @@ package entity;
  * Created by Reaktor on 10.12.2014.
  */
 public class Group {
+    private int idGroup;
     private String groupName;
+
+    public int getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(int idGroup) {
+        this.idGroup = idGroup;
+    }
 
     public String getGroupName() {
         return groupName;
@@ -33,6 +42,6 @@ public class Group {
 
     @Override
     public String toString() {
-        return groupName;
+        return "ID=" + idGroup + "  Group=" + groupName;
     }
 }

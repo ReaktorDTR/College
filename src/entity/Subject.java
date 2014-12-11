@@ -4,7 +4,16 @@ package entity;
  * Created by Reaktor on 10.12.2014.
  */
 public class Subject {
+    private int idSubject;
     private String subjectName;
+
+    public int getIdSubject() {
+        return idSubject;
+    }
+
+    public void setIdSubject(int idSubject) {
+        this.idSubject = idSubject;
+    }
 
     public String getSubjectName() {
         return subjectName;
@@ -33,6 +42,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        return subjectName;
+        return "ID=" + idSubject + "  Subject=" + subjectName;
     }
 }

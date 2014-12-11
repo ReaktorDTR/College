@@ -4,9 +4,18 @@ package entity;
  * Created by Reaktor on 10.12.2014.
  */
 public class Rating {
+    private int idRating;
     private int idStudent;
     private int idSubject;
     private int mark;
+
+    public int getIdRating() {
+        return idRating;
+    }
+
+    public void setIdRating(int idRating) {
+        this.idRating = idRating;
+    }
 
     public int getIdStudent() {
         return idStudent;

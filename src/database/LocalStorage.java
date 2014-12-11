@@ -14,66 +14,80 @@ import java.util.Map;
  * Created by Reaktor on 10.12.2014.
  */
 public class LocalStorage {
-    private Map<Integer,Group> groupsTable = new LinkedHashMap<>();
-    private Map<Integer,Student> studentsTable = new LinkedHashMap<>();
-    private Map<Integer,Subject> subjectsTable = new LinkedHashMap<>();
-    private Map<Integer,Rating> ratingsTable = new LinkedHashMap<>();
+    private int idGroup = 0;
+    private int idStudent = 0;
+    private int idSubject = 0;
+    private int idRating = 0;
+    private List<Group> groupsTable = new ArrayList<>();
+    private List<Student> studentsTable = new ArrayList<>();
+    private List<Subject> subjectsTable = new ArrayList<>();
+    private List<Rating> ratingsTable = new ArrayList<>();
 
-    public Map<Integer, Group> getGroupsTable() {
+    public int getIdGroup() {
+        return idGroup;
+    }
+
+    public int getIdStudent() {
+        return idStudent;
+    }
+
+    public int getIdSubject() {
+        return idSubject;
+    }
+
+    public int getIdRating() {
+        return idRating;
+    }
+
+    public void setIdRating(int idRating) {
+        this.idRating = idRating;
+    }
+
+    public List<Group> getGroupsTable() {
         return groupsTable;
     }
 
-    public void setGroupsTable(Map<Integer, Group> groupsTable) {
+    public void setGroupsTable(List<Group> groupsTable) {
         this.groupsTable = groupsTable;
     }
 
-    public Map<Integer, Student> getStudentsTable() {
+    public List<Student> getStudentsTable() {
         return studentsTable;
     }
 
-    public void setStudentsTable(Map<Integer, Student> studentsTable) {
+    public void setStudentsTable(List<Student> studentsTable) {
         this.studentsTable = studentsTable;
     }
 
-    public Map<Integer, Subject> getSubjectsTable() {
+    public List<Subject> getSubjectsTable() {
         return subjectsTable;
     }
 
-    public void setSubjectsTable(Map<Integer, Subject> subjectsTable) {
+    public void setSubjectsTable(List<Subject> subjectsTable) {
         this.subjectsTable = subjectsTable;
     }
 
-    public Map<Integer, Rating> getRatingsTable() {
+    public List<Rating> getRatingsTable() {
         return ratingsTable;
     }
 
-    public void setRatingsTable(Map<Integer, Rating> ratingsTable) {
+    public void setRatingsTable(List<Rating> ratingsTable) {
         this.ratingsTable = ratingsTable;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LocalStorage that = (LocalStorage) o;
-
-        if (groupsTable != null ? !groupsTable.equals(that.groupsTable) : that.groupsTable != null) return false;
-        if (ratingsTable != null ? !ratingsTable.equals(that.ratingsTable) : that.ratingsTable != null) return false;
-        if (studentsTable != null ? !studentsTable.equals(that.studentsTable) : that.studentsTable != null)
-            return false;
-        if (subjectsTable != null ? !subjectsTable.equals(that.subjectsTable) : that.subjectsTable != null)
-            return false;
-
-        return true;
+    public void incrementIdGroup(){
+        idGroup++;
     }
 
-    @Override
-    public int hashCode() {
-        int result = groupsTable != null ? groupsTable.hashCode() : 0;
-        result = 31 * result + (studentsTable != null ? studentsTable.hashCode() : 0);
-        result = 31 * result + (subjectsTable != null ? subjectsTable.hashCode() : 0);
-        result = 31 * result + (ratingsTable != null ? ratingsTable.hashCode() : 0);
-        return result;
+    public void incrementIdStudent(){
+        idStudent++;
+    }
+
+    public void incrementIdSubject(){
+        idSubject++;
+    }
+
+    public void incrementIdRating(){
+        idRating++;
     }
 }

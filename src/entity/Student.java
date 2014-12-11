@@ -1,12 +1,24 @@
 package entity;
 
+import control.BaseManager;
+import database.LocalStorage;
+
 /**
  * Created by Reaktor on 10.12.2014.
  */
 public class Student {
+    private int idStudent;
     private String firstName;
-    private String LastName;
+    private String lastName;
     private int idGroup;
+
+    public int getIdStudent() {
+        return idStudent;
+    }
+
+    public void setIdStudent(int idStudent) {
+        this.idStudent = idStudent;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -17,11 +29,11 @@ public class Student {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public int getIdGroup() {
@@ -40,7 +52,7 @@ public class Student {
         Student student = (Student) o;
 
         if (idGroup != student.idGroup) return false;
-        if (LastName != null ? !LastName.equals(student.LastName) : student.LastName != null) return false;
+        if (lastName != null ? !lastName.equals(student.lastName) : student.lastName != null) return false;
         if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null) return false;
 
         return true;
@@ -49,8 +61,13 @@ public class Student {
     @Override
     public int hashCode() {
         int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (LastName != null ? LastName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + idGroup;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Student='" + firstName + " " + lastName + "'";
     }
 }
