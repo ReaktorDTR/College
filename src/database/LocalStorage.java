@@ -16,7 +16,7 @@ import java.util.Map;
 public class LocalStorage {
     private Map<Integer,Group> groupsTable = new LinkedHashMap<>();
     private Map<Integer,Student> studentsTable = new LinkedHashMap<>();
-    private Map<Integer,Student> subjectsTable = new LinkedHashMap<>();
+    private Map<Integer,Subject> subjectsTable = new LinkedHashMap<>();
     private Map<Integer,Rating> ratingsTable = new LinkedHashMap<>();
 
     public Map<Integer, Group> getGroupsTable() {
@@ -35,11 +35,11 @@ public class LocalStorage {
         this.studentsTable = studentsTable;
     }
 
-    public Map<Integer, Student> getSubjectsTable() {
+    public Map<Integer, Subject> getSubjectsTable() {
         return subjectsTable;
     }
 
-    public void setSubjectsTable(Map<Integer, Student> subjectsTable) {
+    public void setSubjectsTable(Map<Integer, Subject> subjectsTable) {
         this.subjectsTable = subjectsTable;
     }
 

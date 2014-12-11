@@ -29,6 +29,10 @@ public class UserInterface {
                 baseManager.addStudents();
             } else if (inputData.equals("ls")) {
                 baseManager.outTableStudents();
+            } else if (inputData.equals("asub")) {
+                baseManager.addSubject();
+            } else if (inputData.equals("lsub")) {
+                baseManager.outTableSubjects();
             } else if (inputData.equals("ar")) {
                 baseManager.selectIdStudent(baseManager.selectIdGroup());
             }  else if (inputData.equals("e")) {

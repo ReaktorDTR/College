@@ -30,4 +30,9 @@ public class Subject {
     public int hashCode() {
         return subjectName != null ? subjectName.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return subjectName;
+    }
 }
