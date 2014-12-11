@@ -23,7 +23,7 @@ public class BaseManager {
         localStorage.getGroupsTable().put(idGroup, group);
     }
 
-    private void addGroup(String groupName) {
+    public void addGroup(String groupName) {
         Group newGroup = new Group();
         newGroup.setGroupName(groupName);
         if (!localStorage.getGroupsTable().containsValue(newGroup)) {
@@ -33,7 +33,7 @@ public class BaseManager {
     }
 
     public void addGroups() {
-        System.out.println("Input groups");
+        System.out.println("Input groups :");
         while (true) {
             String inputQuery = "group name";
             String groupName = inputFromKeyboard(inputQuery, Validation.GROUP_PATTERN);
@@ -60,28 +60,31 @@ public class BaseManager {
 
     public void addStudents() {
         if (!localStorage.getGroupsTable().isEmpty()) {
-            int idGroup = selectGroupId();
-            System.out.println("Input students (:e - Exit)");
+            int idGroup = selectIdGroup();
+            System.out.println("Input students: ");
             while (true) {
-                System.out.print("Input firs name and last name");
-                String firstNameAndLastName = inputFromKeyboard();
-/*
-                int idGroup = Integer.parseInt();
-                if (groupName.equals(":e")) break;
-                if (Validation.validateGroupName(groupName)) {
-                    addGroup(groupName);
-                    System.out.println("Group added");
-                } else {
-                    System.out.println("Bad group name");
-                }*/
+                String inputQuery = "student first name";
+                String firstName = inputFromKeyboard(inputQuery, Validation.FIRST_NAME_PATTERN);
+                if (firstName.equals("!e")) break;
+
+                inputQuery = "student last name";
+                String lastName = inputFromKeyboard(inputQuery, Validation.LAST_NAME_PATTERN);
+                if (lastName.equals("!e")) break;
+                addStudent(firstName,lastName,idGroup);
+                System.out.println("Student added");
             }
         } else {
             System.out.println("Add some groups");
             addGroups();
+            addStudents();
         }
     }
 
-    public int selectGroupId() {
+    public void addRating() {
+
+    }
+
+    public int selectIdGroup() {
         String inputQuery = "group";
         while (true) {
             outTableGroups();
@@ -94,11 +97,48 @@ public class BaseManager {
         }
     }
 
+    public int selectIdStudent() {
+        int idGroup = selectIdGroup();
+        return selectIdStudent(idGroup);
+    }
+
+    public int selectIdStudent(int idGroup) {
+        String inputQuery = "student";
+        while (true) {
+            outTableStudents(idGroup);
+            int selectedId = selectId(inputQuery);
+            if (localStorage.getStudentsTable().containsKey(selectedId) && localStorage.getStudentsTable().get(idGroup).getIdGroup() == idGroup) {
+                return selectedId;
+            } else {
+                System.out.println("Student ID=" + selectedId + ", not found.");
+            }
+        }
+    }
+
+
     public void outTableGroups() {
         for (Entry<Integer, Group> entry : localStorage.getGroupsTable().entrySet()) {
             Integer key = entry.getKey();
             Group value = entry.getValue();
             System.out.println("ID=" + key + " Group=" + value);
+        }
+    }
+
+    public void outTableStudents() {
+        for (Entry<Integer, Group> entry : localStorage.getGroupsTable().entrySet()) {
+            Integer key = entry.getKey();
+            Group value = entry.getValue();
+            outTableStudents(key);
+        }
+    }
+
+    public void outTableStudents(int idGroup) {
+        for (Entry<Integer, Student> entry : localStorage.getStudentsTable().entrySet()) {
+            Integer key = entry.getKey();
+            Student value = entry.getValue();
+            if (value.getIdGroup() == idGroup) {
+                System.out.println("ID=" + key + " Student='" + value.getFirstName() + " " + value.getLastName() + "\' Group=" + localStorage.getGroupsTable().get(idGroup));
+            }
         }
     }
 
