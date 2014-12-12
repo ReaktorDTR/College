@@ -5,6 +5,10 @@ import control.managersTables.RatingTableManager;
 import control.managersTables.StudentTableManager;
 import control.managersTables.SubjectTableManager;
 import database.LocalStorage;
+import entity.Group;
+import entity.Rating;
+import entity.Student;
+import entity.Subject;
 
 /**
  * Created by sdovhtc on 12/11/2014.

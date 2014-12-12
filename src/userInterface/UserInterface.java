@@ -28,6 +28,7 @@ public class UserInterface {
         storageManager.ratingTableManager.addRating(2,2,5);
         storageManager.ratingTableManager.addRating(2,2,4);
         storageManager.ratingTableManager.addRating(2,1,5);
+        storageManager.ratingTableManager.addRating(4,3,2);
         while (true) {
             System.out.print("key: ");
             String inputData = KeyboardInput.input();
@@ -35,20 +36,30 @@ public class UserInterface {
                 storageManager.groupTableManager.addGroups();
             } else if (inputData.equals("lg")) {
                 storageManager.groupTableManager.outTableGroups();
+            } else if (inputData.equals("rg")) {
+                storageManager.ratingTableManager.removeGroup();;
             } else if (inputData.equals("as")) {
                 storageManager.studentTableManager.addStudents();
             } else if (inputData.equals("ls")) {
                 storageManager.studentTableManager.outTableStudents();
+            } else if (inputData.equals("lsbg")) {
+                storageManager.studentTableManager.outTableStudents(storageManager.groupTableManager.selectIdGroup());
+            } else if (inputData.equals("rs")) {
+                storageManager.ratingTableManager.removeStudent();
             } else if (inputData.equals("asub")) {
                 storageManager.subjectTableManager.addSubjects();
             } else if (inputData.equals("lsub")) {
                 storageManager.subjectTableManager.outTableSubjects();
-            } else if (inputData.equals("artg")) {
+            } else if (inputData.equals("rsub")) {
+                storageManager.ratingTableManager.removeSubject();
+            } else if (inputData.equals("arg")) {
                 storageManager.ratingTableManager.addRatingsToGroup();
-            } else if (inputData.equals("arts")) {
+            } else if (inputData.equals("ars")) {
                 storageManager.ratingTableManager.addRatingsToStudent();
             } else if (inputData.equals("lr")) {
                 storageManager.ratingTableManager.outTableRating();
+            } else if (inputData.equals("rrs")) {
+                storageManager.ratingTableManager.removeRating();
             } else if (inputData.equals("!e")) {
                 break;
             }

@@ -1,6 +1,8 @@
 package control.managersTables;
 
 import database.LocalStorage;
+import entity.Group;
+import entity.Rating;
 import entity.Student;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
@@ -28,7 +30,7 @@ public class StudentTableManager {
         newStudent.setIdGroup(idGroup);
         if (!localStorage.getStudentsTable().contains(newStudent)) {
             localStorage.incrementIdStudent();
-            newStudent.setIdStudent(localStorage.getIdStudent());
+            newStudent.setIdStudent(localStorage.getIdStudentCounter());
             addStudent(newStudent);
         }
     }

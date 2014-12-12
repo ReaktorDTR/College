@@ -1,7 +1,9 @@
 package control.managersTables;
 
+import control.StorageManager;
 import database.LocalStorage;
 import entity.Group;
+import entity.Student;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
 
@@ -11,7 +13,6 @@ import userInterface.Validation;
 
 public class GroupTableManager {
     private LocalStorage localStorage;
-
     public GroupTableManager(LocalStorage localStorage) {
         this.localStorage = localStorage;
     }
@@ -25,7 +26,7 @@ public class GroupTableManager {
         newGroup.setGroupName(groupName);
         if (!localStorage.getGroupsTable().contains(newGroup)) {
             localStorage.incrementIdGroup();
-            newGroup.setIdGroup(localStorage.getIdGroup());
+            newGroup.setIdGroup(localStorage.getIdGroupCounter());
             addGroup(newGroup);
         }
     }

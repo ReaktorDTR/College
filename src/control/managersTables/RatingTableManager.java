@@ -7,6 +7,8 @@ import entity.Student;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
 
+import java.util.Iterator;
+
 /**
  * Created by Reaktor on 11.12.2014.
  */
@@ -43,7 +45,7 @@ public class RatingTableManager {
             }
             if (!isUpdated) {
                 localStorage.incrementIdRating();
-                newRating.setIdRating(localStorage.getIdRating());
+                newRating.setIdRating(localStorage.getIdRatingCounter());
                 addRating(newRating);
             }
         }
@@ -158,6 +160,15 @@ public class RatingTableManager {
         return false;
     }
 
+    private boolean isContainId(int idRating, int idStudent) {
+        for (Rating rating : localStorage.getRatingsTable()) {
+            if (rating.getIdRating() == idRating && rating.getIdStudent() == idStudent) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isStudentContainRating(Student student) {
         for (Rating rating : localStorage.getRatingsTable()) {
             if (rating.getIdStudent() == student.getIdStudent()) {
@@ -165,5 +176,103 @@ public class RatingTableManager {
             }
         }
         return false;
+    }
+
+    public int selectIdRating() {
+        int idStudent = studentTableManager.selectIdStudent();
+        return selectIdRating(idStudent);
+    }
+
+    public int selectIdRating(int idStudent) {
+        String inputQuery = "rating";
+        while (true) {
+            outTableRating(studentTableManager.getStudentById(idStudent));
+            int selectedId = KeyboardInput.selectId(inputQuery);
+            if (isContainId(selectedId, idStudent)) {
+                return selectedId;
+            } else {
+                System.out.println("Rating ID=" + selectedId + ", not found.");
+            }
+        }
+    }
+
+    public void removeRating() {
+        int idRating = selectIdRating();
+        removeRating(idRating);
+    }
+
+    public void removeRating(int idRating) {
+        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
+            Rating rating = localStorage.getRatingsTable().get(i);
+            if (rating.getIdRating() == idRating) {
+                localStorage.getRatingsTable().remove(i);
+            }
+        }
+    }
+
+    public void removeRating(Student student) {
+        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
+            Rating rating = localStorage.getRatingsTable().get(i);
+            if (rating.getIdStudent() == student.getIdStudent()) {
+                localStorage.getRatingsTable().remove(i);
+            }
+        }
+    }
+
+    public void removeSubject() {
+        int idSubject = subjectTableManager.selectIdSubject();
+        removeSubject(idSubject);
+    }
+
+    public void removeSubject(int idSubject) {
+        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
+            Rating rating = localStorage.getRatingsTable().get(i);
+            if (rating.getIdSubject() == idSubject) {
+                removeRating(rating.getIdRating());
+                localStorage.getRatingsTable().remove(i);
+            }
+        }
+    }
+
+    public void removeStudent() {
+        int idStudent = studentTableManager.selectIdStudent();
+        removeStudent(idStudent);
+    }
+
+    public void removeStudent(int idStudent) {
+        Iterator <Student> iteratorStudent = localStorage.getStudentsTable().iterator();
+        while (iteratorStudent.hasNext()) {
+            Student student = iteratorStudent.next();
+            if (student.getIdStudent() == idStudent) {
+                removeRating(student);
+                iteratorStudent.remove();
+            }
+        }
+    }
+
+    public void removeStudent(Group group) {
+        Iterator <Student> iteratorStudent = localStorage.getStudentsTable().iterator();
+        while (iteratorStudent.hasNext()) {
+            Student student = iteratorStudent.next();
+            if (student.getIdGroup() == group.getIdGroup()) {
+                removeRating(student);
+                iteratorStudent.remove();
+            }
+        }
+    }
+
+    public void removeGroup() {
+        int idGroup = groupTableManager.selectIdGroup();
+        removeGroup(idGroup);
+    }
+
+    public void removeGroup(int idGroup) {
+        for (int i = 0; i < localStorage.getGroupsTable().size(); i++) {
+            Group group = localStorage.getGroupsTable().get(i);
+            if (group.getIdGroup() == idGroup) {
+                removeStudent(group);
+                localStorage.getGroupsTable().remove(i);
+            }
+        }
     }
 }

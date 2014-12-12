@@ -1,6 +1,7 @@
 package control.managersTables;
 
 import database.LocalStorage;
+import entity.Rating;
 import entity.Subject;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
@@ -24,7 +25,7 @@ public class SubjectTableManager {
         newSubject.setSubjectName(subjectName);
         if (!localStorage.getSubjectsTable().contains(newSubject)) {
             localStorage.incrementIdSubject();
-            newSubject.setIdSubject(localStorage.getIdSubject());
+            newSubject.setIdSubject(localStorage.getIdSubjectCounter());
             addSubject(newSubject);
         }
     }

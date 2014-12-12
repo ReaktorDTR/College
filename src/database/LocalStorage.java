@@ -12,29 +12,29 @@ import java.util.List;
  * Created by Reaktor on 10.12.2014.
  */
 public class LocalStorage {
-    private int idGroup = 0;
-    private int idStudent = 0;
-    private int idSubject = 0;
-    private int idRating = 0;
+    private int idGroupCounter = 0;
+    private int idStudentCounter = 0;
+    private int idSubjectCounter = 0;
+    private int idRatingCounter = 0;
     private List<Group> groupsTable = new ArrayList<>();
     private List<Student> studentsTable = new ArrayList<>();
     private List<Subject> subjectsTable = new ArrayList<>();
     private List<Rating> ratingsTable = new ArrayList<>();
 
-    public int getIdGroup() {
-        return idGroup;
+    public int getIdGroupCounter() {
+        return idGroupCounter;
     }
 
-    public int getIdStudent() {
-        return idStudent;
+    public int getIdStudentCounter() {
+        return idStudentCounter;
     }
 
-    public int getIdSubject() {
-        return idSubject;
+    public int getIdSubjectCounter() {
+        return idSubjectCounter;
     }
 
-    public int getIdRating() {
-        return idRating;
+    public int getIdRatingCounter() {
+        return idRatingCounter;
     }
 
     public List<Group> getGroupsTable() {
@@ -70,18 +70,18 @@ public class LocalStorage {
     }
 
     public void incrementIdGroup() {
-        idGroup++;
+        idGroupCounter++;
     }
 
     public void incrementIdStudent() {
-        idStudent++;
+        idStudentCounter++;
     }
 
     public void incrementIdSubject() {
-        idSubject++;
+        idSubjectCounter++;
     }
 
     public void incrementIdRating() {
-        idRating++;
+        idRatingCounter++;
     }
 }
