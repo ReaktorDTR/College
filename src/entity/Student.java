@@ -1,8 +1,5 @@
 package entity;
 
-import control.BaseManager;
-import database.LocalStorage;
-
 /**
  * Created by Reaktor on 10.12.2014.
  */
@@ -68,6 +65,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student='" + firstName + " " + lastName + "'";
+        return "ID=" + idStudent + " Student='" + firstName + " " + lastName + "'";
     }
 }

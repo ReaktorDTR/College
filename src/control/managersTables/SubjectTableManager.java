@@ -1,9 +1,9 @@
-package control;
+package control.managersTables;
 
 import database.LocalStorage;
 import entity.Subject;
-
-import java.util.List;
+import userInterface.KeyboardInput;
+import userInterface.Validation;
 
 /**
  * Created by sdovhtc on 12/11/2014.
@@ -29,7 +29,7 @@ public class SubjectTableManager {
         }
     }
 
-    public void addSubject() {
+    public void addSubjects() {
         System.out.println("Input subjects :");
         while (true) {
             String inputQuery = "subject name";
@@ -45,7 +45,7 @@ public class SubjectTableManager {
         while (true) {
             outTableSubjects();
             int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(localStorage.getSubjectsTable(),selectedId)) {
+            if (isContainId(selectedId)) {
                 return selectedId;
             } else {
                 System.out.println("Subject ID=" + selectedId + ", not found.");
@@ -59,12 +59,23 @@ public class SubjectTableManager {
         }
     }
 
-    private boolean isContainId(List<Subject> list, int id) {
-        for (Subject subject : list) {
-            if (subject.getIdSubject() == id) {
+    private boolean isContainId(int idSubject) {
+        for (Subject subject : localStorage.getSubjectsTable()) {
+            if (subject.getIdSubject() == idSubject) {
                 return true;
             }
         }
         return false;
+    }
+
+    public String getSubjectNameById(int idSubject) {
+        if (isContainId(idSubject)) {
+            for (Subject subject : localStorage.getSubjectsTable()) {
+                if (subject.getIdSubject() == idSubject) {
+                    return subject.getSubjectName();
+                }
+            }
+        }
+        return "";
     }
 }

@@ -1,4 +1,4 @@
-import control.UserInterface;
+import userInterface.UserInterface;
 
 /**
  * Created by Reaktor on 11.12.2014.

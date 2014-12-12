@@ -1,10 +1,9 @@
-package control;
+package control.managersTables;
 
 import database.LocalStorage;
 import entity.Group;
-import entity.Student;
-
-import java.util.List;
+import userInterface.KeyboardInput;
+import userInterface.Validation;
 
 /**
  * Created by sdovhtc on 12/11/2014.
@@ -47,7 +46,7 @@ public class GroupTableManager {
         while (true) {
             outTableGroups();
             int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(localStorage.getGroupsTable(),selectedId)) {
+            if (isContainId(selectedId)) {
                 return selectedId;
             } else {
                 System.out.println("Group ID=" + selectedId + ", not found.");
@@ -61,8 +60,8 @@ public class GroupTableManager {
         }
     }
 
-    private boolean isContainId(List<Group> list, int id) {
-        for (Group group : list) {
+    private boolean isContainId(int id) {
+        for (Group group : localStorage.getGroupsTable()) {
             if (group.getIdGroup() == id) {
                 return true;
             }
@@ -70,10 +69,14 @@ public class GroupTableManager {
         return false;
     }
 
-    private boolean isGroupEmpty(int idGroup) {
-        for (Student student : localStorage.getStudentsTable()) {
-            
+    public String getGroupNameById(int idGroup) {
+        if (isContainId(idGroup)) {
+            for (Group group : localStorage.getGroupsTable()) {
+                if (group.getIdGroup() == idGroup) {
+                    return group.getGroupName();
+                }
+            }
         }
-        return true;
+        return "";
     }
 }

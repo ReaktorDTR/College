@@ -1,4 +1,4 @@
-package control;
+package userInterface;
 
 /**
  * Created by sdovhtc on 12/10/2014.

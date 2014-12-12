@@ -7,6 +7,10 @@ public class Group {
     private int idGroup;
     private String groupName;
 
+    public Group() {
+
+    }
+
     public int getIdGroup() {
         return idGroup;
     }

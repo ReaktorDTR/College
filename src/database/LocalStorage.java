@@ -6,9 +6,7 @@ import entity.Student;
 import entity.Subject;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Reaktor on 10.12.2014.
@@ -37,10 +35,6 @@ public class LocalStorage {
 
     public int getIdRating() {
         return idRating;
-    }
-
-    public void setIdRating(int idRating) {
-        this.idRating = idRating;
     }
 
     public List<Group> getGroupsTable() {
@@ -75,19 +69,19 @@ public class LocalStorage {
         this.ratingsTable = ratingsTable;
     }
 
-    public void incrementIdGroup(){
+    public void incrementIdGroup() {
         idGroup++;
     }
 
-    public void incrementIdStudent(){
+    public void incrementIdStudent() {
         idStudent++;
     }
 
-    public void incrementIdSubject(){
+    public void incrementIdSubject() {
         idSubject++;
     }
 
-    public void incrementIdRating(){
+    public void incrementIdRating() {
         idRating++;
     }
 }
