@@ -70,13 +70,17 @@ public class GroupTableManager {
     }
 
     public String getGroupNameById(int idGroup) {
+        return getGroupById(idGroup).getGroupName();
+    }
+
+    public Group getGroupById(int idGroup) {
         if (isContainId(idGroup)) {
             for (Group group : localStorage.getGroupsTable()) {
                 if (group.getIdGroup() == idGroup) {
-                    return group.getGroupName();
+                    return group;
                 }
             }
         }
-        return "";
+        return null;
     }
 }

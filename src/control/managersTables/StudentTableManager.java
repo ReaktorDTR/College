@@ -107,24 +107,22 @@ public class StudentTableManager {
     }
 
     public String getStudentFullNameById(int idStudent) {
-        if (isContainId(idStudent)) {
-            for (Student student : localStorage.getStudentsTable()) {
-                if (student.getIdStudent() == idStudent) {
-                    return student.getFirstName() + " " + student.getLastName();
-                }
-            }
-        }
-        return "";
+        Student student = getStudentById(idStudent);
+        return student.getFirstName() + " " + student.getLastName();
     }
 
     public String getStudentGroupNameById(int idStudent) {
+        return groupTableManager.getGroupNameById(getStudentById(idStudent).getIdGroup());
+    }
+
+    public Student getStudentById(int idStudent) {
         if (isContainId(idStudent)) {
             for (Student student : localStorage.getStudentsTable()) {
                 if (student.getIdStudent() == idStudent) {
-                    return groupTableManager.getGroupNameById(student.getIdGroup());
+                    return student;
                 }
             }
         }
-        return "";
+        return null;
     }
 }

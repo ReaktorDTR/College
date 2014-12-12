@@ -23,8 +23,13 @@ public class UserInterface {
         storageManager.subjectTableManager.addSubject("Math");
         storageManager.subjectTableManager.addSubject("History");
         storageManager.subjectTableManager.addSubject("Tech");
+        storageManager.ratingTableManager.addRating(1,2,3);
+        storageManager.ratingTableManager.addRating(2,2,5);
+        storageManager.ratingTableManager.addRating(2,2,5);
+        storageManager.ratingTableManager.addRating(2,2,4);
+        storageManager.ratingTableManager.addRating(2,1,5);
         while (true) {
-            System.out.print("key : ");
+            System.out.print("key: ");
             String inputData = KeyboardInput.input();
             if (inputData.equals("ag")) {
                 storageManager.groupTableManager.addGroups();
@@ -40,7 +45,11 @@ public class UserInterface {
                 storageManager.subjectTableManager.outTableSubjects();
             } else if (inputData.equals("artg")) {
                 storageManager.ratingTableManager.addRatingsToGroup();
-            } else if (inputData.equals("e")) {
+            } else if (inputData.equals("arts")) {
+                storageManager.ratingTableManager.addRatingsToStudent();
+            } else if (inputData.equals("lr")) {
+                storageManager.ratingTableManager.outTableRating();
+            } else if (inputData.equals("!e")) {
                 break;
             }
         }
