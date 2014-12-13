@@ -1,6 +1,8 @@
 package userInterface;
 
 import control.StorageManager;
+import control.ioLocalStorage.IOLocalStorage;
+import control.ioLocalStorage.ioType.IOStorage;
 import database.LocalStorage;
 
 /**
@@ -8,10 +10,12 @@ import database.LocalStorage;
  */
 public class UserInterface {
 
-    private static LocalStorage localStorage = new LocalStorage();
-
     public static void showMenu() {
+        LocalStorage localStorage = new LocalStorage();
+        IOLocalStorage ioLocalStorage = new IOLocalStorage();
         StorageManager storageManager = new StorageManager(localStorage);
+
+
         storageManager.groupTableManager.addGroup("Engineers");
         storageManager.groupTableManager.addGroup("Mathematics");
         storageManager.studentTableManager.addStudent("Serhii", "Dovhanuk", 1);
@@ -23,12 +27,13 @@ public class UserInterface {
         storageManager.subjectTableManager.addSubject("Math");
         storageManager.subjectTableManager.addSubject("History");
         storageManager.subjectTableManager.addSubject("Tech");
-        storageManager.ratingTableManager.addRating(1,2,3);
-        storageManager.ratingTableManager.addRating(2,2,5);
+        storageManager.ratingTableManager.addRating(1, 2, 3);
+        storageManager.ratingTableManager.addRating(2, 2, 5);
         storageManager.ratingTableManager.addRating(2,2,5);
         storageManager.ratingTableManager.addRating(2,2,4);
         storageManager.ratingTableManager.addRating(2,1,5);
         storageManager.ratingTableManager.addRating(4,3,2);
+
         while (true) {
             System.out.print("key: ");
             String inputData = KeyboardInput.input();
@@ -42,7 +47,7 @@ public class UserInterface {
                 storageManager.studentTableManager.addStudents();
             } else if (inputData.equals("ls")) {
                 storageManager.studentTableManager.outTableStudents();
-            } else if (inputData.equals("lsbg")) {
+            } else if (inputData.equals("lsog")) {
                 storageManager.studentTableManager.outTableStudents(storageManager.groupTableManager.selectIdGroup());
             } else if (inputData.equals("rs")) {
                 storageManager.ratingTableManager.removeStudent();
@@ -58,12 +63,46 @@ public class UserInterface {
                 storageManager.ratingTableManager.addRatingsToStudent();
             } else if (inputData.equals("lr")) {
                 storageManager.ratingTableManager.outTableRating();
+            } else if (inputData.equals("lrog")) {
+                storageManager.ratingTableManager.outTableRating(storageManager.groupTableManager.getGroupById(storageManager.groupTableManager.selectIdGroup()));
+            } else if (inputData.equals("lros")) {
+                storageManager.ratingTableManager.outTableRating(storageManager.studentTableManager.getStudentById(storageManager.studentTableManager.selectIdStudent()));
             } else if (inputData.equals("rrs")) {
                 storageManager.ratingTableManager.removeRating();
+            } else if (inputData.equals("clr")) {
+                localStorage = new LocalStorage();
+                storageManager = new StorageManager(localStorage);
+            } else if (inputData.equals("sdat")) {
+                ioLocalStorage.saveToDatFile(localStorage, "database.dat");
+            } else if (inputData.equals("ldat")) {
+                localStorage = ioLocalStorage.loadFromDatFile("database.dat");
+                storageManager.setLocalStorage(localStorage);
+            } else if (inputData.equals("h")) {
+                menu();
             } else if (inputData.equals("!e")) {
                 break;
             }
         }
     }
 
+    private static void menu() {
+        System.out.println("key : ag    : Add groups.");
+        System.out.println("key : lg    : List groups.");
+        System.out.println("key : rg    : Remove group.");
+        System.out.println("key : as    : Add students to group.");
+        System.out.println("key : ls    : List all students.");
+        System.out.println("key : lsog  : List students of group.");
+        System.out.println("key : rs    : Remove student.");
+        System.out.println("key : asub  : Add subjects.");
+        System.out.println("key : lsub  : List subjects.");
+        System.out.println("key : rsub  : Remove subject.");
+        System.out.println("key : arg   : Add rating to group.");
+        System.out.println("key : ars   : Add rating to student.");
+        System.out.println("key : lr    : List ratings.");
+        System.out.println("key : lrog  : List ratings of group.");
+        System.out.println("key : lros  : List ratings of student.");
+        System.out.println("key : rrs   : Remove ratings of student.");
+        System.out.println("key : h     : Help.");
+        System.out.println("key : !e    : Exit.");
+    }
 }

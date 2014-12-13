@@ -37,10 +37,14 @@ public class KeyboardInput {
         while (true) {
             System.out.print("Select " + inputQuery + " ID: ");
             String inputData = input();
-            if (Validation.validate(inputData, Validation.ID_PATTERN)) {
-                return Integer.parseInt(inputData);
+            if (!inputData.equals("!e")) {
+                if (Validation.validate(inputData, Validation.ID_PATTERN)) {
+                    return Integer.parseInt(inputData);
+                } else {
+                    System.out.println("Bad " + inputQuery + " ID!");
+                }
             } else {
-                System.out.println("Bad " + inputQuery + " ID!");
+                return -1;
             }
         }
     }

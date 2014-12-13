@@ -64,16 +64,21 @@ public class StudentTableManager {
     }
 
     public int selectIdStudent(int idGroup) {
-        String inputQuery = "student";
-        while (true) {
-            outTableStudents(idGroup);
-            int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(selectedId, idGroup)) {
-                return selectedId;
-            } else {
-                System.out.println("Student ID=" + selectedId + ", not found.");
+        if (idGroup != -1) {
+            String inputQuery = "student";
+            while (true) {
+                outTableStudents(idGroup);
+                int selectedId = KeyboardInput.selectId(inputQuery);
+                if (selectedId != -1) {
+                    if (isContainId(selectedId, idGroup)) {
+                        return selectedId;
+                    } else {
+                        System.out.println("Student ID=" + selectedId + ", not found.");
+                    }
+                } else return -1;
             }
         }
+        return -1;
     }
 
     public void outTableStudents() {
@@ -83,10 +88,14 @@ public class StudentTableManager {
     }
 
     public void outTableStudents(int idGroup) {
-        for (Student student : localStorage.getStudentsTable()) {
-            if (student.getIdGroup() == idGroup) {
-                System.out.println(student + " Group=" + groupTableManager.getGroupNameById(student.getIdGroup()));
+        if (isGroupContainStudents(idGroup)) {
+            for (Student student : localStorage.getStudentsTable()) {
+                if (student.getIdGroup() == idGroup) {
+                    System.out.println(student + " Group=" + groupTableManager.getGroupNameById(student.getIdGroup()));
+                }
             }
+        } else {
+            System.out.println("Group doesn't have any students.");
         }
     }
 
@@ -102,6 +111,15 @@ public class StudentTableManager {
     private boolean isContainId(int idStudent) {
         for (Student student : localStorage.getStudentsTable()) {
             if (student.getIdStudent() == idStudent) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isGroupContainStudents(int idGroup) {
+        for (Student student : localStorage.getStudentsTable()) {
+            if (student.getIdGroup() == idGroup) {
                 return true;
             }
         }

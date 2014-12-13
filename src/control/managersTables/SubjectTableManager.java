@@ -46,11 +46,13 @@ public class SubjectTableManager {
         while (true) {
             outTableSubjects();
             int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(selectedId)) {
-                return selectedId;
-            } else {
-                System.out.println("Subject ID=" + selectedId + ", not found.");
-            }
+            if (selectedId != -1) {
+                if (isContainId(selectedId)) {
+                    return selectedId;
+                } else {
+                    System.out.println("Subject ID=" + selectedId + ", not found.");
+                }
+            } else return -1;
         }
     }
 

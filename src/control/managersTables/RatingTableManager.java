@@ -4,6 +4,7 @@ import database.LocalStorage;
 import entity.Group;
 import entity.Rating;
 import entity.Student;
+import entity.Subject;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
 
@@ -52,42 +53,45 @@ public class RatingTableManager {
     }
 
     public void addRatingsToGroup() {
-        if (!localStorage.getSubjectsTable().isEmpty()) {
-            int idSubject = subjectTableManager.selectIdSubject();
-            if (!localStorage.getGroupsTable().isEmpty()) {
-                int idGroup = groupTableManager.selectIdGroup();
-                System.out.println("Input ratings: ");
-                for (Student student : localStorage.getStudentsTable()) {
-                    if (student.getIdGroup() == idGroup) {
-                        System.out.println("Student='" + student.getFirstName() + " " + student.getLastName() + "' Group=" + groupTableManager.getGroupNameById(idGroup));
-                        String input = KeyboardInput.inputValidQueryData("mark for " + subjectTableManager.getSubjectNameById(idSubject), Validation.MARK_PATTERN);
-                        if (input.equals("!e")) break;
-                        int mark = Integer.parseInt(input);
-                        addRating(student.getIdStudent(), idSubject, mark);
+        int idGroup = groupTableManager.selectIdGroup();
+        if (idGroup != -1) {
+            if (studentTableManager.isGroupContainStudents(idGroup)) {
+                if (!localStorage.getSubjectsTable().isEmpty()) {
+                    int idSubject = subjectTableManager.selectIdSubject();
+                    if (idSubject != -1) {
+                        System.out.println("Input ratings: ");
+                        for (Student student : localStorage.getStudentsTable()) {
+                            if (student.getIdGroup() == idGroup) {
+                                System.out.println("Student='" + student.getFirstName() + " " + student.getLastName() + "' Group=" + groupTableManager.getGroupNameById(idGroup));
+                                String input = KeyboardInput.inputValidQueryData("mark for " + subjectTableManager.getSubjectNameById(idSubject), Validation.MARK_PATTERN);
+                                if (input.equals("!e")) break;
+                                int mark = Integer.parseInt(input);
+                                addRating(student.getIdStudent(), idSubject, mark);
+                            }
+                        }
                     }
+                } else {
+                    System.out.println("Add some subjects");
+                    subjectTableManager.addSubjects();
+                    addRatingsToGroup();
                 }
             } else {
-                System.out.println("Add some groups");
-                groupTableManager.addGroups();
+                System.out.println("Add some students");
                 studentTableManager.addStudents();
                 addRatingsToGroup();
             }
-        } else {
-            System.out.println("Add some subjects");
-            subjectTableManager.addSubjects();
         }
     }
 
     public void addRatingsToStudent() {
-        if (!localStorage.getSubjectsTable().isEmpty()) {
-            int idSubject = subjectTableManager.selectIdSubject();
-            if (!localStorage.getGroupsTable().isEmpty()) {
-                int idGroup = groupTableManager.selectIdGroup();
-                int idStudent = studentTableManager.selectIdStudent(idGroup);
-                Student student = studentTableManager.getStudentById(idStudent);
-                System.out.println("Input rating: ");
-                if (student.getIdGroup() == idGroup) {
-                    System.out.println("Student='" + student.getFirstName() + " " + student.getLastName() + "' Group=" + groupTableManager.getGroupNameById(idGroup));
+        int idStudent = studentTableManager.selectIdStudent();
+        if (idStudent != -1) {
+            if (!localStorage.getSubjectsTable().isEmpty()) {
+                int idSubject = subjectTableManager.selectIdSubject();
+                if (idSubject != -1) {
+                    Student student = studentTableManager.getStudentById(idStudent);
+                    System.out.println("Input rating: ");
+                    System.out.println("Student='" + student.getFirstName() + " " + student.getLastName() + "' Group=" + groupTableManager.getGroupNameById(student.getIdGroup()));
                     String input = KeyboardInput.inputValidQueryData("mark for " + subjectTableManager.getSubjectNameById(idSubject), Validation.MARK_PATTERN);
                     if (!input.equals("!e")) {
                         int mark = Integer.parseInt(input);
@@ -95,14 +99,10 @@ public class RatingTableManager {
                     }
                 }
             } else {
-                System.out.println("Add some groups");
-                groupTableManager.addGroups();
-                studentTableManager.addStudents();
+                System.out.println("Add some subjects");
+                subjectTableManager.addSubjects();
                 addRatingsToGroup();
             }
-        } else {
-            System.out.println("Add some subjects");
-            subjectTableManager.addSubjects();
         }
     }
 
@@ -114,14 +114,22 @@ public class RatingTableManager {
                     System.out.println("ID=" + rating.getIdRating() + " Subject=" + subjectTableManager.getSubjectNameById(rating.getIdSubject()) + " Mark=" + rating.getMark());
                 }
             }
+        } else {
+            System.out.println("Student='" + studentTableManager.getStudentFullNameById(student.getIdStudent()) + "' Group=" + studentTableManager.getStudentGroupNameById(student.getIdStudent()));
+            System.out.println("Student doesn't have any rank");
         }
     }
 
     public void outTableRating(Group group) {
-        for (Student student : localStorage.getStudentsTable()) {
-            if (student.getIdGroup() == group.getIdGroup()) {
-                outTableRating(student);
+        if (isGroupContainRating(group)) {
+            for (Student student : localStorage.getStudentsTable()) {
+                if (student.getIdGroup() == group.getIdGroup()) {
+                    outTableRating(student);
+                }
             }
+        } else {
+            System.out.println();
+            System.out.println("Group='" + group.getGroupName() + "' doesn't have any rank");
         }
     }
 
@@ -169,10 +177,22 @@ public class RatingTableManager {
         return false;
     }
 
+
     private boolean isStudentContainRating(Student student) {
         for (Rating rating : localStorage.getRatingsTable()) {
             if (rating.getIdStudent() == student.getIdStudent()) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isGroupContainRating(Group group) {
+        for (Student student : localStorage.getStudentsTable()) {
+            if (student.getIdGroup() == group.getIdGroup()) {
+                if (isStudentContainRating(student)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -185,62 +205,86 @@ public class RatingTableManager {
 
     public int selectIdRating(int idStudent) {
         String inputQuery = "rating";
-        while (true) {
-            outTableRating(studentTableManager.getStudentById(idStudent));
-            int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(selectedId, idStudent)) {
-                return selectedId;
-            } else {
-                System.out.println("Rating ID=" + selectedId + ", not found.");
+        if (isStudentContainRating(studentTableManager.getStudentById(idStudent))) {
+            while (true) {
+                outTableRating(studentTableManager.getStudentById(idStudent));
+                int selectedId = KeyboardInput.selectId(inputQuery);
+                if (selectedId != -1) {
+                    if (isContainId(selectedId, idStudent)) {
+                        return selectedId;
+                    } else {
+                        System.out.println("Rating ID=" + selectedId + ", not found.");
+                    }
+                } else return -1;
             }
         }
+        return -1;
     }
 
     public void removeRating() {
         int idRating = selectIdRating();
-        removeRating(idRating);
+        if (idRating != -1) {
+            removeRating(idRating);
+        }
     }
 
     public void removeRating(int idRating) {
-        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
-            Rating rating = localStorage.getRatingsTable().get(i);
+        Iterator<Rating> iteratorRating = localStorage.getRatingsTable().iterator();
+        while (iteratorRating.hasNext()) {
+            Rating rating = iteratorRating.next();
             if (rating.getIdRating() == idRating) {
-                localStorage.getRatingsTable().remove(i);
+                iteratorRating.remove();
             }
         }
     }
 
     public void removeRating(Student student) {
-        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
-            Rating rating = localStorage.getRatingsTable().get(i);
+        Iterator<Rating> iteratorRating = localStorage.getRatingsTable().iterator();
+        while (iteratorRating.hasNext()) {
+            Rating rating = iteratorRating.next();
             if (rating.getIdStudent() == student.getIdStudent()) {
-                localStorage.getRatingsTable().remove(i);
+                iteratorRating.remove();
+            }
+        }
+    }
+
+    public void removeRating(Subject subject) {
+        Iterator<Rating> iteratorRating = localStorage.getRatingsTable().iterator();
+        while (iteratorRating.hasNext()) {
+            Rating rating = iteratorRating.next();
+            if (rating.getIdSubject() == subject.getIdSubject()) {
+                iteratorRating.remove();
             }
         }
     }
 
     public void removeSubject() {
         int idSubject = subjectTableManager.selectIdSubject();
-        removeSubject(idSubject);
+        if (idSubject != -1) {
+            removeSubject(idSubject);
+        }
     }
 
     public void removeSubject(int idSubject) {
-        for (int i = 0; i < localStorage.getRatingsTable().size(); i++) {
-            Rating rating = localStorage.getRatingsTable().get(i);
-            if (rating.getIdSubject() == idSubject) {
-                removeRating(rating.getIdRating());
-                localStorage.getRatingsTable().remove(i);
+        Iterator<Subject> iteratorSubject = localStorage.getSubjectsTable().iterator();
+        while (iteratorSubject.hasNext()) {
+            Subject subject = iteratorSubject.next();
+            if (subject.getIdSubject() == idSubject) {
+                removeRating(subject);
+                iteratorSubject.remove();
             }
         }
     }
 
     public void removeStudent() {
         int idStudent = studentTableManager.selectIdStudent();
-        removeStudent(idStudent);
+        if (idStudent != -1) {
+            removeStudent(idStudent);
+        }
     }
 
     public void removeStudent(int idStudent) {
-        Iterator <Student> iteratorStudent = localStorage.getStudentsTable().iterator();
+        Iterator<Student> iteratorStudent = localStorage.getStudentsTable().iterator();
         while (iteratorStudent.hasNext()) {
             Student student = iteratorStudent.next();
             if (student.getIdStudent() == idStudent) {
@@ -251,7 +295,7 @@ public class RatingTableManager {
     }
 
     public void removeStudent(Group group) {
-        Iterator <Student> iteratorStudent = localStorage.getStudentsTable().iterator();
+        Iterator<Student> iteratorStudent = localStorage.getStudentsTable().iterator();
         while (iteratorStudent.hasNext()) {
             Student student = iteratorStudent.next();
             if (student.getIdGroup() == group.getIdGroup()) {
@@ -263,15 +307,18 @@ public class RatingTableManager {
 
     public void removeGroup() {
         int idGroup = groupTableManager.selectIdGroup();
-        removeGroup(idGroup);
+        if (idGroup != -1) {
+            removeGroup(idGroup);
+        }
     }
 
     public void removeGroup(int idGroup) {
-        for (int i = 0; i < localStorage.getGroupsTable().size(); i++) {
-            Group group = localStorage.getGroupsTable().get(i);
+        Iterator<Group> iteratorGroup = localStorage.getGroupsTable().iterator();
+        while (iteratorGroup.hasNext()) {
+            Group group = iteratorGroup.next();
             if (group.getIdGroup() == idGroup) {
                 removeStudent(group);
-                localStorage.getGroupsTable().remove(i);
+                iteratorGroup.remove();
             }
         }
     }

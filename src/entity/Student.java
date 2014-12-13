@@ -1,9 +1,11 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Reaktor on 10.12.2014.
  */
-public class Student {
+public class Student implements Serializable {
     private int idStudent;
     private String firstName;
     private String lastName;

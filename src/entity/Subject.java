@@ -1,9 +1,11 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Reaktor on 10.12.2014.
  */
-public class Subject {
+public class Subject implements Serializable {
     private int idSubject;
     private String subjectName;
 

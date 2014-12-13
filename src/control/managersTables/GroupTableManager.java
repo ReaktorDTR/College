@@ -43,16 +43,25 @@ public class GroupTableManager {
     }
 
     public int selectIdGroup() {
-        String inputQuery = "group";
-        while (true) {
-            outTableGroups();
-            int selectedId = KeyboardInput.selectId(inputQuery);
-            if (isContainId(selectedId)) {
-                return selectedId;
-            } else {
-                System.out.println("Group ID=" + selectedId + ", not found.");
+        if (!localStorage.getGroupsTable().isEmpty()) {
+            String inputQuery = "group";
+            while (true) {
+                outTableGroups();
+                int selectedId = KeyboardInput.selectId(inputQuery);
+                if (selectedId != -1) {
+                    if (isContainId(selectedId)) {
+                        return selectedId;
+                    } else {
+                        System.out.println("Group ID=" + selectedId + ", not found.");
+                    }
+                } else return -1;
             }
+        } else {
+            System.out.println("Add some groups");
+            addGroups();
+            selectIdGroup();
         }
+        return -1;
     }
 
     public void outTableGroups() {

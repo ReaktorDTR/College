@@ -1,9 +1,11 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Reaktor on 10.12.2014.
  */
-public class Group {
+public class Group implements Serializable {
     private int idGroup;
     private String groupName;
 
