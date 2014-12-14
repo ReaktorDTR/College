@@ -1,9 +1,7 @@
 package control.managersTables;
 
-import control.StorageManager;
 import database.LocalStorage;
 import entity.Group;
-import entity.Student;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
 
@@ -13,6 +11,7 @@ import userInterface.Validation;
 
 public class GroupTableManager {
     private LocalStorage localStorage;
+
     public GroupTableManager(LocalStorage localStorage) {
         this.localStorage = localStorage;
     }
@@ -40,6 +39,22 @@ public class GroupTableManager {
             addGroup(groupName);
             System.out.println("Group added");
         }
+    }
+
+    public void updateGroup() {
+        int idGroup = selectIdGroup();
+        if (idGroup != -1) {
+            String inputQuery = "group name";
+            String groupName = KeyboardInput.inputValidQueryData(inputQuery, Validation.GROUP_PATTERN);
+            if (!groupName.equals("!e")) {
+                updateGroup(idGroup, groupName);
+            }
+        }
+    }
+
+    public void updateGroup(int idGroup, String groupName) {
+        Group group = getGroupById(idGroup);
+        group.setGroupName(groupName);
     }
 
     public int selectIdGroup() {

@@ -1,7 +1,6 @@
 package control.managersTables;
 
 import database.LocalStorage;
-import entity.Rating;
 import entity.Subject;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
@@ -34,11 +33,28 @@ public class SubjectTableManager {
         System.out.println("Input subjects :");
         while (true) {
             String inputQuery = "subject name";
-            String SubjectName = KeyboardInput.inputValidQueryData(inputQuery, Validation.SUBJECT_PATTERN);
-            if (SubjectName.equals("!e")) break;
-            addSubject(SubjectName);
+            String subjectName = KeyboardInput.inputValidQueryData(inputQuery, Validation.SUBJECT_PATTERN);
+            if (subjectName.equals("!e")) break;
+            addSubject(subjectName);
             System.out.println("Subject added");
         }
+    }
+
+    public void updateSubject() {
+        int idSubject = selectIdSubject();
+        if (idSubject != -1) {
+            String inputQuery = "subject name";
+            String subjectName = KeyboardInput.inputValidQueryData(inputQuery, Validation.SUBJECT_PATTERN);
+            if (!subjectName.equals("!e")) {
+                updateSubject(idSubject, subjectName);
+            }
+
+        }
+    }
+
+    public void updateSubject(int idSubject, String subjectName) {
+        Subject subject = getSubjectById(idSubject);
+        subject.setSubjectName(subjectName);
     }
 
     public int selectIdSubject() {
@@ -80,5 +96,16 @@ public class SubjectTableManager {
             }
         }
         return "";
+    }
+
+    public Subject getSubjectById(int idSubject) {
+        if (isContainId(idSubject)) {
+            for (Subject subject : localStorage.getSubjectsTable()) {
+                if (subject.getIdSubject() == idSubject) {
+                    return subject;
+                }
+            }
+        }
+        return null;
     }
 }

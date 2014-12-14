@@ -1,8 +1,6 @@
 package control.managersTables;
 
 import database.LocalStorage;
-import entity.Group;
-import entity.Rating;
 import entity.Student;
 import userInterface.KeyboardInput;
 import userInterface.Validation;
@@ -56,6 +54,30 @@ public class StudentTableManager {
             groupTableManager.addGroups();
             addStudents();
         }
+    }
+
+    public void updateStudent() {
+        int idStudent = selectIdStudent();
+        if (idStudent != -1) {
+            String inputQuery = "student first name";
+            String firstName = KeyboardInput.inputValidQueryData(inputQuery, Validation.FIRST_NAME_PATTERN);
+            if (!firstName.equals("!e")) {
+                inputQuery = "student last name";
+                String lastName = KeyboardInput.inputValidQueryData(inputQuery, Validation.LAST_NAME_PATTERN);
+                if (!lastName.equals("!e")) {
+                    int idGroup = groupTableManager.selectIdGroup();
+                    if (idGroup != -1)
+                        updateStudent(idStudent, firstName, lastName, idGroup);
+                }
+            }
+        }
+    }
+
+    public void updateStudent(int idStudent, String firstName, String lastName, int idGroup) {
+        Student student = getStudentById(idStudent);
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
+        student.setIdGroup(idGroup);
     }
 
     public int selectIdStudent() {

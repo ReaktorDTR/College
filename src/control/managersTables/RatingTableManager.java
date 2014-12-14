@@ -159,6 +159,13 @@ public class RatingTableManager {
         }
     }
 
+    public void updateRating(int idRating, int idStudent, int idSubject, int mark) {
+        Rating rating = getRatingById(idRating);
+        rating.setIdStudent(idStudent);
+        rating.setIdSubject(idSubject);
+        rating.setMark(mark);
+    }
+
     private boolean isContainId(int idRating) {
         for (Rating rating : localStorage.getRatingsTable()) {
             if (rating.getIdRating() == idRating) {
@@ -176,7 +183,6 @@ public class RatingTableManager {
         }
         return false;
     }
-
 
     private boolean isStudentContainRating(Student student) {
         for (Rating rating : localStorage.getRatingsTable()) {
@@ -219,6 +225,17 @@ public class RatingTableManager {
             }
         }
         return -1;
+    }
+
+    public Rating getRatingById(int idRating) {
+        if (isContainId(idRating)) {
+            for (Rating rating : localStorage.getRatingsTable()) {
+                if (rating.getIdRating() == idRating) {
+                    return rating;
+                }
+            }
+        }
+        return null;
     }
 
     public void removeRating() {

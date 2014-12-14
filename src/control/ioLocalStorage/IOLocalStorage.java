@@ -1,6 +1,7 @@
 package control.ioLocalStorage;
 
 import control.ioLocalStorage.ioType.IODatFile;
+import control.ioLocalStorage.ioType.IOXML;
 import database.LocalStorage;
 
 /**
@@ -8,6 +9,7 @@ import database.LocalStorage;
  */
 public class IOLocalStorage {
     IODatFile ioDatFile = new IODatFile();
+    IOXML ioxml = new IOXML();
 
     public void saveToDatFile(LocalStorage localStorage, String outputFileName) {
         ioDatFile.output(localStorage, outputFileName);
@@ -17,4 +19,11 @@ public class IOLocalStorage {
         return ioDatFile.input(inputFileName);
     }
 
+    public void saveToXMLFile(LocalStorage localStorage, String outputFileName) {
+        ioxml.output(localStorage, outputFileName);
+    }
+
+    public LocalStorage loadFromXMLFile(String inputFileName) {
+        return ioxml.input(inputFileName);
+    }
 }

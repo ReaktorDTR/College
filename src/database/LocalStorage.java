@@ -5,14 +5,14 @@ import entity.Rating;
 import entity.Student;
 import entity.Subject;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Reaktor on 10.12.2014.
  */
-public class LocalStorage implements Serializable{
+public class LocalStorage implements Serializable {
     private int idGroupCounter = 0;
     private int idStudentCounter = 0;
     private int idSubjectCounter = 0;

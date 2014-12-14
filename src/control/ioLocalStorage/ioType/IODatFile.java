@@ -9,6 +9,7 @@ import java.io.*;
  */
 public class IODatFile implements IOStorage {
 
+    @Override
     public void output(LocalStorage localStorage, String outputFileName) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(outputFileName))) {
             outputStream.writeObject(localStorage);
@@ -19,7 +20,8 @@ public class IODatFile implements IOStorage {
         }
     }
 
-    public LocalStorage input (String inputFileName) {
+    @Override
+    public LocalStorage input(String inputFileName) {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(inputFileName))) {
             return (LocalStorage) inputStream.readObject();
         } catch (FileNotFoundException e) {
