@@ -38,6 +38,22 @@ public class LocalStorage implements Serializable {
         return idRatingCounter;
     }
 
+    public void setIdGroupCounter(int idGroupCounter) {
+        this.idGroupCounter = idGroupCounter;
+    }
+
+    public void setIdStudentCounter(int idStudentCounter) {
+        this.idStudentCounter = idStudentCounter;
+    }
+
+    public void setIdSubjectCounter(int idSubjectCounter) {
+        this.idSubjectCounter = idSubjectCounter;
+    }
+
+    public void setIdRatingCounter(int idRatingCounter) {
+        this.idRatingCounter = idRatingCounter;
+    }
+
     public List<Group> getGroupsTable() {
         return groupsTable;
     }

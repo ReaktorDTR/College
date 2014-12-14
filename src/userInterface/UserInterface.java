@@ -13,7 +13,7 @@ public class UserInterface {
         LocalStorage localStorage = new LocalStorage();
         IOLocalStorage ioLocalStorage = new IOLocalStorage();
         StorageManager storageManager = new StorageManager(localStorage);
-
+/*
         storageManager.groupTableManager.addGroup("Engineers");
         storageManager.groupTableManager.addGroup("Mathematics");
         storageManager.studentTableManager.addStudent("Serhii", "Dovhanuk", 1);
@@ -31,6 +31,8 @@ public class UserInterface {
         storageManager.ratingTableManager.addRating(2, 2, 4);
         storageManager.ratingTableManager.addRating(2, 1, 5);
         storageManager.ratingTableManager.addRating(4, 3, 2);
+*/
+        //ioLocalStorage.saveToSQL(localStorage);
 
         while (true) {
             System.out.print("key: ");
@@ -86,6 +88,11 @@ public class UserInterface {
             } else if (inputData.equals("lxml")) {
                 localStorage = ioLocalStorage.loadFromXMLFile("database.xml");
                 storageManager.setLocalStorage(localStorage);
+            } else if (inputData.equals("ssql")) {
+                ioLocalStorage.saveToSQL(localStorage);
+            } else if (inputData.equals("lsql")) {
+                localStorage = ioLocalStorage.loadFromSQL();
+                storageManager.setLocalStorage(localStorage);
             } else if (inputData.equals("h")) {
                 menu();
             } else if (inputData.equals("!e")) {
@@ -114,6 +121,12 @@ public class UserInterface {
         System.out.println("key : lrog  : List ratings of group.");
         System.out.println("key : lros  : List ratings of student.");
         System.out.println("key : rrs   : Remove ratings of student.");
+        System.out.println("key : sdat  : Save database to *.dat file.");
+        System.out.println("key : ldat  : Load database from *.dat file.");
+        System.out.println("key : sxml  : Save database to *.xml file.");
+        System.out.println("key : lxml  : Load database from *.xml file.");
+        System.out.println("key : ssql  : Save database to SQL.");
+        System.out.println("key : lsql  : Load database from SQL.");
         System.out.println("key : clr   : Clear database.");
         System.out.println("key : h     : Help.");
         System.out.println("key : !e    : Exit.");

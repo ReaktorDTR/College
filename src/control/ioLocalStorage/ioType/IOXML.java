@@ -15,9 +15,8 @@ import java.io.FileOutputStream;
 /**
  * Created by Reaktor on 13.12.2014.
  */
-public class IOXML implements IOStorage {
+public class IOXML {
 
-    @Override
     public void output(LocalStorage localStorage, String outputFileName) {
         XStream xstream = new XStream(new DomDriver());
         xstream.alias("LocalStorage", LocalStorage.class);
@@ -34,7 +33,6 @@ public class IOXML implements IOStorage {
         }
     }
 
-    @Override
     public LocalStorage input(String inputFileName) {
         LocalStorage localStorage = new LocalStorage();
         XStream xstream = new XStream(new DomDriver());

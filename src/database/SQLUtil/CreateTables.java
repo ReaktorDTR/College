@@ -8,21 +8,21 @@ import java.sql.Statement;
  * Created by Reaktor on 14.12.2014.
  */
 public class CreateTables {
-    private final String createGroupTableQuery = "CREATE TABLE `Group` (\n" +
+    private final String createGroupTableQuery = "CREATE TABLE `groups` (\n" +
             "`idGroup`  integer(16) NOT NULL AUTO_INCREMENT ,\n" +
             "`groupName`  varchar(50) NOT NULL ,\n" +
             "PRIMARY KEY (`idGroup`)\n" +
             ")\n" +
             ";";
 
-    private final String createSubjectTableQuery = "CREATE TABLE `Subject` (\n" +
+    private final String createSubjectTableQuery = "CREATE TABLE `subjects` (\n" +
             "`idSubject`  integer(16) NOT NULL AUTO_INCREMENT ,\n" +
             "`subjectName`  varchar(50) NOT NULL ,\n" +
             "PRIMARY KEY (`idSubject`)\n" +
             ")\n" +
             ";";
 
-    private final String createStudentTableQuery = "CREATE TABLE `Student` (\n" +
+    private final String createStudentTableQuery = "CREATE TABLE `students` (\n" +
             "`idStudent`  integer(16) NOT NULL AUTO_INCREMENT ,\n" +
             "`firstName`  varchar(50) NOT NULL ,\n" +
             "`lastName`  varchar(50) NOT NULL ,\n" +
@@ -31,7 +31,7 @@ public class CreateTables {
             ")\n" +
             ";";
 
-    private final String createRatingTableQuery = "CREATE TABLE `Rating` (\n" +
+    private final String createRatingTableQuery = "CREATE TABLE `ratings` (\n" +
             "`idRating`  integer(16) NOT NULL AUTO_INCREMENT ,\n" +
             "`idStudent`  integer(50) NOT NULL ,\n" +
             "`idSubject`  integer(50) NOT NULL ,\n" +
